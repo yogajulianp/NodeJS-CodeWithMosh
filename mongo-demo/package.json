@@ -1,0 +1,14 @@
+{
+  "name": "mongo-demo",
+  "version": "1.0.0",
+  "description": "belajar CodeWithMosh Node.js - CRUD Operations Using Mongoose - Yoga Julian",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yoga Julian Prasutiyo",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^6.2.6"
+  }
+}
