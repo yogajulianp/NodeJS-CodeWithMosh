@@ -18,25 +18,26 @@ const dataMuridSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum : ['kelas web', 'kelas mobile', 'kelas network'],
-        lowercase: true,
-        //uppercase: true,
-        trim : true,
+        enum : ['kelas web', 'kelas mobile', 'kelas network']
+        
     },
     address: String,
     tags: {
         type: Array,
         validate : {
             isAsync: true,
+
             validator: function(v, callback) {
-                setTimeout(()=> {
-                    // bekerja dengan async sistem
-                    const result = v && v.length > 0;
-                    callback(result);
-                }, 4000) 
+                return new Promise (()=> {
+                    setTimeout(()=> {
+                        // bekerja dengan async sistem
+                        resolve ({v && v.length > 0});
+                        
+                    }, 4000) 
+                })
             },
             message: 'A course should have at least one tag.'
-        }
+        };
     },
     dateJoin: { type: Date, default: Date.now},
     isActiveStudents: Boolean,
@@ -45,8 +46,6 @@ const dataMuridSchema = new mongoose.Schema({
         required: function() {return this.isActiveStudents ;},
         min : 10,
         max : 300,
-        get: v => Math.round(v),
-        set: v => Math.round(v)
     }
 });
 
@@ -55,11 +54,11 @@ const DataMurid = mongoose.model('dataMurid', dataMuridSchema);
 async function createDataMurid() {
     const dataMurid = new DataMurid({
         name: 'Yoga Julian Prasutiyo  ',
-        category: 'Kelas Web',
+        category: 'kelas web',
         address: 'Depok, Indonesia',
-        tags: ['Backend Engineer', 'JavaScript'],
+        //tags: ['Software Engineer kontributor, alamat'],
         isActiveStudents: true,
-        priceJoin: 15.8
+        priceJoin: 15
     });
 
     try {
@@ -68,22 +67,21 @@ async function createDataMurid() {
        console.log(result);
     }
     catch (ex) {
-        for (field in ex.errors)
-        console.log(ex.errors[field]);
+        console.log(ex.message);
     }
 }
 createDataMurid();
 
 
 //mengambil semua data = find()
-async function getDataMurids(){
+/*async function getDataMurids(){
    const dataMurids = await DataMurid.find();
    console.log(dataMurids)
 } 
-//getDataMurids(); 
+getDataMurids(); */
 
 //meneseleksi dari filter dan count
-async function getDataMurids(){
+/*async function getDataMurids(){
    
     const dataMurids = await DataMurid
     .find({ name: 'Yoga Julian Prasutiyo', isActiveStudents: true })
@@ -93,7 +91,7 @@ async function getDataMurids(){
     .countDocuments()
     console.log(dataMurids)
 }
-//getDataMurids(); 
+getDataMurids(); */
 
 
 
@@ -108,7 +106,7 @@ async function getDataMurids(){
     // nin
 
     //contoh Perbandingan Query
-    async function getDataMurids(){
+   /* async function getDataMurids(){
    
         const dataMurids = await DataMurid
         //.find({ name: 'Yoga Julian Prasutiyo', isActiveStudents: true }) // filter dari nama dan statusAktif
@@ -121,11 +119,11 @@ async function getDataMurids(){
         console.log(dataMurids)
      }
 
-     //getDataMurids(); 
+     getDataMurids(); */
 
 
-    //Logical Query Operator
-    async function getDataMurids(){
+/* //Logical Query Operator
+async function getDataMurids(){
     // or
     // and
    
@@ -140,10 +138,10 @@ async function getDataMurids(){
     console.log(dataMurids)
  }
 
- //getDataMurids(); 
+ getDataMurids(); */
  
  // regular Expresiion
- async function getDataMurids(){
+ /*async function getDataMurids(){
     const dataMurids = await DataMurid
     // .find({ name: 'Yoga Julian Prasutiyo', isActiveStudents: true }) // filter dari nama dan statusAktif
     //.find({ name: /^Yoga/ }) //mencari dengan kata pertama Yoga
@@ -155,10 +153,10 @@ async function getDataMurids(){
     console.log(dataMurids)
  }
 
- //getDataMurids(); 
+ getDataMurids(); */
 
  //pagination
-    async function getDataMurids(){
+ /*async function getDataMurids(){
     const pageNumber = 2;
     const pageSize = 10
    
@@ -171,7 +169,7 @@ async function getDataMurids(){
     .countDocuments()
     console.log(dataMurids)
 }
-//getDataMurids();
+getDataMurids(); */
 
 
 // Updating a Document 
@@ -187,7 +185,7 @@ async function getDataMurids(){
  3. Optionally : get the updated document */
 
 //pendekatan pertama, Query first
-    async function updateDataMurid(id){
+/*async function updateDataMurid(id){
    const dataMurid= await DataMurid.findById(id)
    if (!dataMurid) return;
 
@@ -197,10 +195,10 @@ async function getDataMurids(){
    const result = await dataMurid.save()
    console.log(result)
 };
-//updateDataMurid('623344fa40de4d0da4ba794a'); 
+updateDataMurid('623344fa40de4d0da4ba794a'); */
 
 //pendekatan lain, Updating first 
-    async function updateDataMurid(id){
+/*async function updateDataMurid(id){
     const result= await DataMurid.updateOne( {_id: id}, {
     //gunakan operator update mongoDB
     $set: {
@@ -210,20 +208,20 @@ async function getDataMurids(){
     });
     console.log(result)
  };
- //updateDataMurid('623344fa40de4d0da4ba794a'); 
+ updateDataMurid('623344fa40de4d0da4ba794a'); */
 
  //pendekatan lain, Updating first 
- async function updateDataMurid(id){
+ /*async function updateDataMurid(id){
     const result= await DataMurid.findByIdAndUpdate(id, {
     //gunakan operator update mongoDB
-        $set: {
-            name: 'Prasutiyo',
-            isActiveStudents : false
-        }
+    $set: {
+        name: 'Prasutiyo',
+        isActiveStudents : false
+    }
     }, {new: true});
     console.log(result)
  };
- //updateDataMurid('6232b189956cb438a85d66e7');
+ updateDataMurid('6232b189956cb438a85d66e7');*/
 
  //remove
  async function removeDataMurid(id){
