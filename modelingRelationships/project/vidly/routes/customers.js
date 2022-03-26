@@ -12,12 +12,12 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  let customer = new Customer ({
+  const customer = new Customer ({
       name: req.body.name,
-      phone: req.body.name,
+      phone: req.body.phone,
       isGold: req.body.isGold
     }); 
-  customer = await customer.save();
+  await customer.save();
 
   res.send(customer);
 });
@@ -60,8 +60,8 @@ router.get('/:id', async (req, res) => {
 
 async function createCustomer() {
     const dataCustomer = new Customer({
-        name: 'Prasutiyo Julian   ',
-        phone: '08750000000',
+        name: 'Customer Yoga Julian ',
+        phone: '085716666666',
         isGold: true,
     });
 
@@ -75,6 +75,6 @@ async function createCustomer() {
         console.log(ex.errors[field]);
     }
 }
-createCustomer()
+//createCustomer()
 
 module.exports = router;

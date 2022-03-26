@@ -20,8 +20,8 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
 
-  let genre = new Genre ({name: req.body.name}); 
-  genre = await genre.save();
+  const genre = new Genre ({name: req.body.name}); 
+  await genre.save();
 
   res.send(genre);
 });
@@ -58,6 +58,24 @@ router.get('/:id', async (req, res) => {
   if (!genre) return res.status(404).send('The genre with the given ID was not found.');
   res.send(genre);
 });
+
+async function createGenre() {
+  const dataMovie = new Genre({
+      name : 'Sci-fi'
+  });
+
+  try {
+      //await validate();
+     const result = await dataMovie.save();
+     console.log(result);
+  }
+  catch (ex) {
+      for (field in ex.errors)
+      console.log(ex.errors[field]);
+  }
+}
+
+//createGenre()
 
 
 

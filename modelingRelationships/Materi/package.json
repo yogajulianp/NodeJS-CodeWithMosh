@@ -1,0 +1,14 @@
+{
+  "name": "modelingrelationships",
+  "version": "1.0.0",
+  "description": "Modeling relationships between Connected Data",
+  "main": "population.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yoga Julian Prasutiyo",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^6.2.8"
+  }
+}

@@ -18,7 +18,7 @@ const dataMuridSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum : ['kelas web', 'kelas mobile', 'kelas network'],
+        enum : ['kelas web', 'kelas mobile', 'kelas network', 'backend engineer'],
         lowercase: true,
         //uppercase: true,
         trim : true,
@@ -55,11 +55,11 @@ const DataMurid = mongoose.model('dataMurid', dataMuridSchema);
 async function createDataMurid() {
     const dataMurid = new DataMurid({
         name: 'Yoga Julian Prasutiyo  ',
-        category: 'Kelas Web',
-        address: 'Depok, Indonesia',
+        category: 'backend engineer',
+        address: 'Bumi',
         tags: ['Backend Engineer', 'JavaScript'],
         isActiveStudents: true,
-        priceJoin: 15.8
+        priceJoin: 29.8
     });
 
     try {
@@ -128,7 +128,6 @@ async function getDataMurids(){
     async function getDataMurids(){
     // or
     // and
-   
     const dataMurids = await DataMurid
     // .find({ name: 'Yoga Julian Prasutiyo', isActiveStudents: true }) // filter dari nama dan statusAktif
     .find()
