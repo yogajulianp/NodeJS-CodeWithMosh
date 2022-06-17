@@ -1,25 +1,16 @@
+//const asyncMiddleware = require('../middleware/async')
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const {Genre, validate} = require('../models/genre');
 const express = require('express');
 const mongoose = require('mongoose');
+const func = require('joi/lib/types/func');
 const router = express.Router();
 
-// const genres = [
-//   { id: 1, name: 'Action' },  
-//   { id: 2, name: 'Horror' },  
-//   { id: 3, name: 'Romance' },  
-// ];
-
 router.get('/', async (req, res) => {
-  try{
-    const genres = await Genre.find().sort('name');
-    res.send(genres);
-  }
-  catch(ex) {
-    res.status1q500).send("Something failed")
-  }
-  
+  //throw new Error('Tidak bisa mengambil genre. Could not get the genre.')
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
 });
 
 router.post('/', auth, async (req, res) => {
